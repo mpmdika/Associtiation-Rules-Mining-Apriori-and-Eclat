@@ -1,4 +1,3 @@
-
 import numpy as np
 from tkinter import *
 import tracemalloc
@@ -9,7 +8,6 @@ def viewProgress(data, text_area):
 	text_area.configure(state='disabled')
 
 def compute_vertical_bitvector_data(data, text_area):
-	#---build item to idx mapping---#
 	idx = 0
 	item2idx = {}
 	for transaction in data:
@@ -18,7 +16,6 @@ def compute_vertical_bitvector_data(data, text_area):
 				item2idx[item] = idx
 				idx += 1
 	idx2item = { idx : str(int(item)) for item, idx in item2idx.items() }
-	#---build vertical data---#
 	vb_data = np.zeros((len(item2idx), len(data)), dtype=int)
 	for trans_id, transaction in enumerate(data):
 		for item in transaction:
@@ -74,7 +71,6 @@ def output_handling(support_list):
 	L = tuple(L)
 	support_list = dict((tuple(sorted(list(k), key=lambda x: int(x))), v) for k, v in support_list.items())
 	return L, support_list
-
 
 def eclat(data, min_support, iterative=True, text_area=None):
 	tracemalloc.start()

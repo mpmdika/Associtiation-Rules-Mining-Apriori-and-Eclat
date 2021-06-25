@@ -52,8 +52,6 @@ def viewProgress(data, text_area):
 
 def apriori(data, min_support, text_area):
 	tracemalloc.start()
-
-	
 	D = sorted(list(map(set, data)))
 	num_trans = float(len(D))
 	L1, support_list, CK = compute_C1_and_L1_itemset(data, num_trans, min_support)

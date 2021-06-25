@@ -1,4 +1,3 @@
-
 import os
 import tracemalloc
 import csv
@@ -9,13 +8,10 @@ import matplotlib.pyplot as plt
 import tkinter.scrolledtext as st
 from tkinter import *
 from tkinter import filedialog
-#-----------------------------#
 from apriori import apriori
 from eclat import eclat
-#-----------------------#
 plt.switch_backend('agg')
 plt.rcParams.update({'figure.max_open_warning': 0})
-
 
 def get_config():
 	parser = argparse.ArgumentParser(description='frequent itemset mining argument parser')
@@ -74,6 +70,7 @@ def write_result(result, result_path):
 
 	viewProgress('Rules berhasil disimpan di : '+str(result_path))
 	return True
+
 def assert_at_most_one_is_true(*args):
     return sum(args) <= 1
 
