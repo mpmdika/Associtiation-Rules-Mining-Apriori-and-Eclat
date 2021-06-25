@@ -23,7 +23,7 @@ def compute_vertical_bitvector_data(data, text_area):
 	for trans_id, transaction in enumerate(data):
 		for item in transaction:
 			vb_data[item2idx[item], trans_id] = 1
-	viewProgress('Data transformed into vertical bitvector representation with shape: '+str(np.shape(vb_data)), text_area)
+	viewProgress('Data berhasil di Transformasi ke bentuk Vertical dengan bentuk: '+str(np.shape(vb_data)), text_area)
 	return vb_data, idx2item
 
 def compute_L1(data, idx2item, num_trans, min_support):
@@ -40,10 +40,10 @@ def compute_LK(LK_, support_list, k, num_trans, min_support):
 	LK = []
 	supportK = {}
 	for i in range(len(LK_)):
-		for j in range(i+1, len(LK_)):  # enumerate all combinations in the Lk-1 itemsets
+		for j in range(i+1, len(LK_)): 
 			L1 = sorted(list(LK_[i])[:k-2])
 			L2 = sorted(list(LK_[j])[:k-2])
-			if L1 == L2: # if the first k-1 terms are the same in two itemsets, calculate the intersection support
+			if L1 == L2:
 				union = np.multiply(support_list[LK_[i]], support_list[LK_[j]])
 				union_support = np.sum(union) / num_trans
 				if union_support >= min_support:
@@ -79,8 +79,7 @@ def output_handling(support_list):
 def eclat(data, min_support, iterative=True, text_area=None):
 	tracemalloc.start()
 	num_trans = float(len(data))
-	
-	#---iterative method---#
+
 	if iterative:
 
 		vb_data, idx2item = compute_vertical_bitvector_data(data, text_area=text_area)
@@ -96,13 +95,13 @@ def eclat(data, min_support, iterative=True, text_area=None):
 			if len(LK) == 0:
 				L = [sorted([tuple(sorted(itemset)) for itemset in LK]) for LK in L]
 				support_list = dict((tuple(sorted(k)), np.sum(v)) for k, v in support_list.items())
-				viewProgress('Menjalankan Algoritma Eclat: Iterasi ke- '+str(k-1)+'-th. Terminating ...', text_area)
+				viewProgress('Menjalankan Algoritma Eclat: Iterasi ke- '+str(k-1)+'-th. Menghentikan Penambangan ...', text_area)
 				break
 			else:
 				L.append(LK)
 				support_list.update(supportK)
-		viewProgress("----------------------------------------------------------------------",text_area)
+		viewProgress("-----------------------------------------------------------------------------------------",text_area)
 		current, peak = tracemalloc.get_traced_memory()
-		viewProgress(f"Current memory usage is {current / 10**6}MB; Peak was {peak / 10**6}MB",text_area)
+		viewProgress(f"Memory yang digunakan saat ini {current / 10**6}MB; Penggunaan Memory Maksimum {peak / 10**6}MB",text_area)
 		tracemalloc.stop()
 		return L, support_list

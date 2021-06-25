@@ -73,9 +73,9 @@ def apriori(data, min_support, text_area):
 		else:
 			L.append(LK)
 			support_list.update(supportK)
-	viewProgress("-------------------------------------------------------------------------------------",text_area)
+	viewProgress("--------------------------------------------------------------------------------------",text_area)
 	current, peak = tracemalloc.get_traced_memory()
-	viewProgress(f"Current memory usage is {current / 10**6}MB; Peak was {peak / 10**6}MB",text_area)
+	viewProgress(f"Memory yang digunakan saat ini {current / 10**6}MB; Penggunaan Memory Maksimum {peak / 10**6}MB",text_area)
 	tracemalloc.stop()
 	return L, support_list
 
